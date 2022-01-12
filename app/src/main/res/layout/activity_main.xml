@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/midiIO_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MIDI IN"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MIDI OUT"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/midiIOSpinner_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/outputDevicesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/inputDevicesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ChConvertText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Channel Convert" />
+
+            <LinearLayout
+                android:id="@+id/chConvert_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/chConvertSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="Convert to..." />
+
+                <Switch
+                    android:id="@+id/chConvertToggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    tools:text="Conv" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/PgChangeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Program Change" />
+
+            <Spinner
+                android:id="@+id/programChangeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/ControlChangeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Control Change" />
+
+            <LinearLayout
+                android:id="@+id/ControlChange_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/ccMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/ccFixSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:text="CC Fix" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/VolumeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volume" />
+
+            <LinearLayout
+                android:id="@+id/Volume_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/volumeBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="127"
+                    android:min="0"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/volumeValueText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="100" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/VelocityText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Velocity" />
+
+            <LinearLayout
+                android:id="@+id/Velocity_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/velocityVar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="127"
+                    android:min="0"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/velocityValueText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="100" />
+
+                <Switch
+                    android:id="@+id/velocityFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/PitchBendText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pitch Bend" />
+
+            <SeekBar
+                android:id="@+id/pitchBendSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="8191"
+                android:min="-8192"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/modText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Modulation" />
+
+            <SeekBar
+                android:id="@+id/controllerSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="127"
+                android:min="0"
+                android:progress="64" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/octText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Octave" />
+
+            <TextView
+                android:id="@+id/nowOctText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Now Oct: 0"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/octButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/octMinusButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#CD8E8E"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="-"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/octResetButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#86CA74"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="0"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/octPlusButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#7B92DA"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="+"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/transposeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transpose" />
+
+            <TextView
+                android:id="@+id/nowKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Now key: 0 C"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/keyButtonMinusPlus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/keyMinusButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#CD8E8E"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="♭"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/keyResetButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#86CA74"
+                    android:text="♮"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/keyPlusButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#7B92DA"
+                    android:text="♯"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/minus12-7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/keyMinus12Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-12 C" />
+
+                    <Button
+                        android:id="@+id/keyMinus11Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-11 C♯/D♭" />
+
+                    <Button
+                        android:id="@+id/keyMinus10Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-10 D" />
+
+                    <Button
+                        android:id="@+id/keyMinus9Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-9 D♯/E♭" />
+
+                    <Button
+                        android:id="@+id/keyMinus8Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-8 E" />
+
+                    <Button
+                        android:id="@+id/keyMinus7Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-7 F" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/minus6-1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/keyMinus6Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-6 F♯/G♭" />
+
+                    <Button
+                        android:id="@+id/keyMinus5Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-5 G" />
+
+                    <Button
+                        android:id="@+id/keyMinus4Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-4 G♯/A♭" />
+
+                    <Button
+                        android:id="@+id/keyMinus3Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-3 A" />
+
+                    <Button
+                        android:id="@+id/keyMinus2Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-2 A♯/B♭" />
+
+                    <Button
+                        android:id="@+id/keyMinus1Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D5AEAE"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="-1 B" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:id="@+id/plus1-6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/keyPlus1Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="1 C♯/D♭" />
+
+                    <Button
+                        android:id="@+id/keyPlus2Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="2 D" />
+
+                    <Button
+                        android:id="@+id/keyPlus3Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="3 D♯/E♭" />
+
+                    <Button
+                        android:id="@+id/keyPlus4Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="4 E" />
+
+                    <Button
+                        android:id="@+id/keyPlus5Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="5 F" />
+
+                    <Button
+                        android:id="@+id/keyPlus6Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="6 F♯/G♭" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/plus7-12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/keyPlus7Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="7 G" />
+
+                    <Button
+                        android:id="@+id/keyPlus8Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="8 G♯/A♭" />
+
+                    <Button
+                        android:id="@+id/keyPlus9Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="9 A" />
+
+                    <Button
+                        android:id="@+id/keyPlus10Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="10 A♯/B♭" />
+
+                    <Button
+                        android:id="@+id/keyPlus11Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="11 B" />
+
+                    <Button
+                        android:id="@+id/keyPlus12Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FB0E3"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:text="12 C" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/resetButtonsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reset" />
+
+            <LinearLayout
+                android:id="@+id/resetButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/gmSystemOnButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="1dp"
+                    android:paddingRight="1dp"
+                    android:text="GM System On" />
+
+                <Button
+                    android:id="@+id/gsResetButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GS Reset" />
+
+                <Button
+                    android:id="@+id/xgSystemOnButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="XG System On" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/receiveMessageTx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

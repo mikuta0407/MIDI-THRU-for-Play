@@ -1,0 +1,4 @@
+ninja: Entering directory `/Users/mikuta0407/project/android/native-midi/app/.cxx/Debug/5z193x2b/armeabi-v7a'
+[1/3] Building CXX object CMakeFiles/native_midi.dir/MainActivity.cpp.o
+[2/3] Building CXX object CMakeFiles/native_midi.dir/AppMidiManager.cpp.o
+[3/3] Linking CXX shared library /Users/mikuta0407/project/android/native-midi/app/build/intermediates/cxx/Debug/5z193x2b/obj/armeabi-v7a/libnative_midi.so

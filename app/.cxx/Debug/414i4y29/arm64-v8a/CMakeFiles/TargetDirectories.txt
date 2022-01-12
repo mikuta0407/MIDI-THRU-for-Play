@@ -1,0 +1,3 @@
+/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/arm64-v8a/CMakeFiles/native_midi.dir

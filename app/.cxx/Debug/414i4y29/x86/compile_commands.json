@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/x86",
+  "command": "/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android29 --gcc-toolchain=/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_midi_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -std=c++11 -Wall -Wextra -Werror -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/native_midi.dir/AppMidiManager.cpp.o -c /Users/mikuta0407/project/android/midithru4play/app/src/main/cpp/AppMidiManager.cpp",
+  "file": "/Users/mikuta0407/project/android/midithru4play/app/src/main/cpp/AppMidiManager.cpp"
+},
+{
+  "directory": "/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/x86",
+  "command": "/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android29 --gcc-toolchain=/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/mikuta0407/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_midi_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -std=c++11 -Wall -Wextra -Werror -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/native_midi.dir/MainActivity.cpp.o -c /Users/mikuta0407/project/android/midithru4play/app/src/main/cpp/MainActivity.cpp",
+  "file": "/Users/mikuta0407/project/android/midithru4play/app/src/main/cpp/MainActivity.cpp"
+}
+]

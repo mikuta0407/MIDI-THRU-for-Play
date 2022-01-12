@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MIDI_THRU_for_Play.iml" filepath="$PROJECT_DIR$/.idea/modules/MIDI_THRU_for_Play.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MIDI_THRU_for_Play.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MIDI_THRU_for_Play.app.iml" />
+    </modules>
+  </component>
+</project>

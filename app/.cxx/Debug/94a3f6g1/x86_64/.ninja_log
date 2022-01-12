@@ -1,0 +1,4 @@
+# ninja log v5
+0	52	1641801279	CMakeFiles/native_midi.dir/MainActivity.cpp.o	7b92baeb341daa5f
+0	233	1641801279	CMakeFiles/native_midi.dir/AppMidiManager.cpp.o	c8576d74e97fd682
+234	288	1641801279	/Users/mikuta0407/project/android/native-midi/app/build/intermediates/cxx/Debug/94a3f6g1/obj/x86_64/libnative_midi.so	ce559f5a001ccfb

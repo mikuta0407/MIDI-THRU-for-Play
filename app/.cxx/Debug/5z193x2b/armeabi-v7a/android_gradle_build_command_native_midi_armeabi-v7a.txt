@@ -1,0 +1,7 @@
+Executable : /Users/mikuta0407/Library/Android/sdk/cmake/3.18.1/bin/ninja
+arguments : 
+-C
+/Users/mikuta0407/project/android/native-midi/app/.cxx/Debug/5z193x2b/armeabi-v7a
+native_midi
+jvmArgs : 
+
