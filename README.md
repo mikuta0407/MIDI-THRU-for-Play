@@ -1,5 +1,10 @@
 MIDI THRU 4 Play (Android App)
 -----------
+
+**このプロジェクトはまだ完成していません。 作成途中です!**
+
+**It's in the process of being created!**
+
 **The English explanation will be written when the program is somewhat complete.**
 
 Android 10以上のデバイスで、MIDI鍵盤等を用いた演奏を行う際にNote On/Offなどを橋渡しするプログラムです。
