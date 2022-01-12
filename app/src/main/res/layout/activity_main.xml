@@ -62,6 +62,13 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
+            <Switch
+                android:id="@+id/allThruSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="All THRU Mode" />
+
             <TextView
                 android:id="@+id/ChConvertText"
                 android:layout_width="match_parent"

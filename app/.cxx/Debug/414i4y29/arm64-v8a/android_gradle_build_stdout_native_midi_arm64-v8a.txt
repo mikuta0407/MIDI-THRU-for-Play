@@ -1,3 +1,2 @@
 ninja: Entering directory `/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/arm64-v8a'
-[1/2] Building CXX object CMakeFiles/native_midi.dir/MainActivity.cpp.o
-[2/2] Linking CXX shared library /Users/mikuta0407/project/android/midithru4play/app/build/intermediates/cxx/Debug/414i4y29/obj/arm64-v8a/libnative_midi.so
+ninja: no work to do.

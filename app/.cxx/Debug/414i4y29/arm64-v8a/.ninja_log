@@ -8,3 +8,5 @@
 264	409	1642002801	/Users/mikuta0407/project/android/midithru4play/app/build/intermediates/cxx/Debug/414i4y29/obj/arm64-v8a/libnative_midi.so	b6ed109d9ae84231
 0	275	1642003217	CMakeFiles/native_midi.dir/MainActivity.cpp.o	6563b2e947f5852d
 275	441	1642003217	/Users/mikuta0407/project/android/midithru4play/app/build/intermediates/cxx/Debug/414i4y29/obj/arm64-v8a/libnative_midi.so	b6ed109d9ae84231
+14	888	1642008920	CMakeFiles/native_midi.dir/AppMidiManager.cpp.o	9442ea13e739782c
+888	1047	1642008920	/Users/mikuta0407/project/android/midithru4play/app/build/intermediates/cxx/Debug/414i4y29/obj/arm64-v8a/libnative_midi.so	b6ed109d9ae84231

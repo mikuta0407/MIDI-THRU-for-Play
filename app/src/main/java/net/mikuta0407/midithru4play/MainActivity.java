@@ -26,6 +26,7 @@ import android.media.midi.MidiManager;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -81,6 +82,7 @@ public class MainActivity extends Activity
     TextView mNowKey;
 
     // Switch
+    Switch mAllThruModeSW;
     Switch mChConvertSW;
     Switch mCcFixSW;
     Switch mVelFixSW;
@@ -91,6 +93,7 @@ public class MainActivity extends Activity
     //EditText mProgNumberEdit;
 
     // その他変数
+    boolean isAllThru = false;
     boolean isChConvert = false; // チャンネル変換をするかどうか
     boolean isCcFix = false; // CCのモードを固定するか
     boolean isVelFix = false; // Velocity Fixをするか
@@ -150,16 +153,157 @@ public class MainActivity extends Activity
         mVolumeSB.setOnSeekBarChangeListener(this);
         // Velocity
         mVelocitySB = (SeekBar)findViewById(R.id.velocityVar);
-        mVolumeSB.setOnSeekBarChangeListener(this);
+        mVelocitySB.setOnSeekBarChangeListener(this);
 
         // ==== TextView ====
-        mNowVolume = (TextView)findViewById(R.id.volumeValueText);
-        mNowVelocity = (TextView)findViewById(R.id.velocityValueText);
-        mNowOct = (TextView)findViewById(R.id.nowOctText);
-        mNowKey = (TextView)findViewById(R.id.nowKey);
+        mNowVolume = (TextView)findViewById(R.id.volumeValueText); // Volume
+        mNowVelocity = (TextView)findViewById(R.id.velocityValueText); // Velocity
+        mNowOct = (TextView)findViewById(R.id.nowOctText); // Now Octave
+        mNowKey = (TextView)findViewById(R.id.nowKey); // Now Key
 
         // ==== CheckBox ====
-        mChConvertSW = (Switch) findViewById(R.id.chConvertToggle);
+
+        // All THRU Mode Switch
+        // 全メッセージをTHRUさせるかどうか
+        mAllThruModeSW = (Switch)findViewById(R.id.allThruSwitch);
+        mAllThruModeSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    isAllThru = true;
+
+                    // Spinner
+                    mChannelConvertSpinner.setEnabled(false);
+                    mProgramChangeSpinner.setEnabled(false);
+
+                    // SeekBar
+                    mControllerSB.setEnabled(false);
+                    mPitchBendSB.setEnabled(false);
+                    mVolumeSB.setEnabled(false);
+                    mVelocitySB.setEnabled(false);
+
+                    // TextView
+                    mNowVolume.setEnabled(false);
+                    mNowVelocity.setEnabled(false);
+                    mNowOct.setEnabled(false);
+                    mNowKey.setEnabled(false);
+
+                    // Switch
+                    mChConvertSW.setEnabled(false);
+                    mCcFixSW.setEnabled(false);
+                    mVelFixSW.setEnabled(false);
+
+                    // Button
+                    // Octave
+                    ((Button)findViewById(R.id.octMinusButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.octResetButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.octPlusButton)).setEnabled(false);
+
+                    // Transpose
+                    ((Button)findViewById(R.id.keyMinusButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyResetButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlusButton)).setEnabled(false);
+
+                    ((Button)findViewById(R.id.keyMinus12Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus11Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus10Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus9Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus8Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus7Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus6Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus5Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus4Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus3Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus2Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyMinus1Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus1Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus2Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus3Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus4Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus5Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus6Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus7Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus8Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus9Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus10Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus11Button)).setEnabled(false);
+                    ((Button)findViewById(R.id.keyPlus12Button)).setEnabled(false);
+
+                    // Sound Module Reset
+                    ((Button)findViewById(R.id.gmSystemOnButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.gsResetButton)).setEnabled(false);
+                    ((Button)findViewById(R.id.xgSystemOnButton)).setEnabled(false);
+
+
+                } else {
+                    isAllThru = false;
+                    // Spinner
+                    mChannelConvertSpinner.setEnabled(true);
+                    mProgramChangeSpinner.setEnabled(true);
+
+                    // SeekBar
+                    mControllerSB.setEnabled(true);
+                    mPitchBendSB.setEnabled(true);
+                    mVolumeSB.setEnabled(true);
+                    mVelocitySB.setEnabled(true);
+
+                    // TextView
+                    mNowVolume.setEnabled(true);
+                    mNowVelocity.setEnabled(true);
+                    mNowOct.setEnabled(true);
+                    mNowKey.setEnabled(true);
+
+                    // Switch
+                    mChConvertSW.setEnabled(true);
+                    mCcFixSW.setEnabled(true);
+                    mVelFixSW.setEnabled(true);
+
+                    // Button
+                    // Octave
+                    ((Button)findViewById(R.id.octMinusButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.octResetButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.octPlusButton)).setEnabled(true);
+
+                    // Transpose
+                    ((Button)findViewById(R.id.keyMinusButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyResetButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlusButton)).setEnabled(true);
+
+                    ((Button)findViewById(R.id.keyMinus12Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus11Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus10Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus9Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus8Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus7Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus6Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus5Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus4Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus3Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus2Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyMinus1Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus1Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus2Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus3Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus4Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus5Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus6Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus7Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus8Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus9Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus10Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus11Button)).setEnabled(true);
+                    ((Button)findViewById(R.id.keyPlus12Button)).setEnabled(true);
+
+                    // Sound Module Reset
+                    ((Button)findViewById(R.id.gmSystemOnButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.gsResetButton)).setEnabled(true);
+                    ((Button)findViewById(R.id.xgSystemOnButton)).setEnabled(true);
+                }
+            }
+        });
+
+        //
+        mChConvertSW = (Switch)findViewById(R.id.chConvertToggle);
         mChConvertSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -223,18 +367,18 @@ public class MainActivity extends Activity
         ((Button)findViewById(R.id.keyMinus3Button)).setOnClickListener(this); // Key -3 Btn
         ((Button)findViewById(R.id.keyMinus2Button)).setOnClickListener(this); // Key -2 Btn
         ((Button)findViewById(R.id.keyMinus1Button)).setOnClickListener(this); // Key -1 Btn
-        ((Button)findViewById(R.id.keyMinus1Button)).setOnClickListener(this); // Key +1 Btn
-        ((Button)findViewById(R.id.keyMinus2Button)).setOnClickListener(this); // Key +2 Btn
-        ((Button)findViewById(R.id.keyMinus3Button)).setOnClickListener(this); // Key +3 Btn
-        ((Button)findViewById(R.id.keyMinus4Button)).setOnClickListener(this); // Key +4 Btn
-        ((Button)findViewById(R.id.keyMinus5Button)).setOnClickListener(this); // Key +5 Btn
-        ((Button)findViewById(R.id.keyMinus6Button)).setOnClickListener(this); // Key +6 Btn
-        ((Button)findViewById(R.id.keyMinus7Button)).setOnClickListener(this); // Key +7 Btn
-        ((Button)findViewById(R.id.keyMinus8Button)).setOnClickListener(this); // Key +8 Btn
-        ((Button)findViewById(R.id.keyMinus9Button)).setOnClickListener(this); // Key +9 Btn
-        ((Button)findViewById(R.id.keyMinus10Button)).setOnClickListener(this); // Key +10 Btn
-        ((Button)findViewById(R.id.keyMinus11Button)).setOnClickListener(this); // Key +11 Btn
-        ((Button)findViewById(R.id.keyMinus12Button)).setOnClickListener(this); // Key +12 Btn
+        ((Button)findViewById(R.id.keyPlus1Button)).setOnClickListener(this); // Key +1 Btn
+        ((Button)findViewById(R.id.keyPlus2Button)).setOnClickListener(this); // Key +2 Btn
+        ((Button)findViewById(R.id.keyPlus3Button)).setOnClickListener(this); // Key +3 Btn
+        ((Button)findViewById(R.id.keyPlus4Button)).setOnClickListener(this); // Key +4 Btn
+        ((Button)findViewById(R.id.keyPlus5Button)).setOnClickListener(this); // Key +5 Btn
+        ((Button)findViewById(R.id.keyPlus6Button)).setOnClickListener(this); // Key +6 Btn
+        ((Button)findViewById(R.id.keyPlus7Button)).setOnClickListener(this); // Key +7 Btn
+        ((Button)findViewById(R.id.keyPlus8Button)).setOnClickListener(this); // Key +8 Btn
+        ((Button)findViewById(R.id.keyPlus9Button)).setOnClickListener(this); // Key +9 Btn
+        ((Button)findViewById(R.id.keyPlus10Button)).setOnClickListener(this); // Key +10 Btn
+        ((Button)findViewById(R.id.keyPlus11Button)).setOnClickListener(this); // Key +11 Btn
+        ((Button)findViewById(R.id.keyPlus12Button)).setOnClickListener(this); // Key +12 Btn
 
         // Sound Module Reset
         ((Button)findViewById(R.id.gmSystemOnButton)).setOnClickListener(this); // GM System On
