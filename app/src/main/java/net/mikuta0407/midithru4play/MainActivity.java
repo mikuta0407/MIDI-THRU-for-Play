@@ -86,59 +86,20 @@ public class MainActivity extends Activity
     Switch mVelFixSW;
 
     // Button
-    // Octave
-    Button mOctMinusBT;
-    Button mOctResetBT;
-    Button mOctPlusBT;
-    // Transpose
-    Button mKeyMinusBT;
-    Button mKeyResetBT;
-    Button mKeyPlusBT;
-
-    Button mKeyMinus12BT;
-    Button mKeyMinus11BT;
-    Button mKeyMinus10BT;
-    Button mKeyMinus9BT;
-    Button mKeyMinus8BT;
-    Button mKeyMinus7BT;
-    Button mKeyMinus6BT;
-    Button mKeyMinus5BT;
-    Button mKeyMinus4BT;
-    Button mKeyMinus3BT;
-    Button mKeyMinus2BT;
-    Button mKeyMinus1BT;
-    Button mKeyPlus1BT;
-    Button mKeyPlus2BT;
-    Button mKeyPlus3BT;
-    Button mKeyPlus4BT;
-    Button mKeyPlus5BT;
-    Button mKeyPlus6BT;
-    Button mKeyPlus7BT;
-    Button mKeyPlus8BT;
-    Button mKeyPlus9BT;
-    Button mKeyPlus10BT;
-    Button mKeyPlus11BT;
-    Button mKeyPlus12BT;
-
-    // Reset
-    Button mGmSystemOnBT;
-    Button mGsResetBT;
-    Button mXgSystemOnBT;
+    //これらは後ほど直接貼り付け
 
     //EditText mProgNumberEdit;
 
+    // その他変数
+    boolean isChConvert = false; // チャンネル変換をするかどうか
+    boolean isCcFix = false; // CCのモードを固定するか
+    boolean isVelFix = false; // Velocity Fixをするか
 
-    // 変数状態
-    boolean isChConvert = false;
-    boolean isCcFix = false;
-    boolean isVelFix = false;
+    int octave = 0; // オクターブ移動状態
+    int transpose = 0; //キー状態
 
-    int octave = 0;
-    int transpose = 0;
-
-    int volume = 100;
-    int velocity = 100;
-
+    int volume = 100; // Volume
+    int velocity = 100; // Velocity (for Fix)
 
     // Force to load the native library
     static {
@@ -238,10 +199,47 @@ public class MainActivity extends Activity
         //mProgNumberEdit = (EditText)findViewById(R.id.progNumEdit);
 
 
-        // ボタン
-        //((Button)findViewById(R.id.keyDownBtn)).setOnClickListener(this); //Note On
-        //((Button)findViewById(R.id.keyUpBtn)).setOnClickListener(this); // Note Off
-        //((Button)findViewById(R.id.channelChangeBtn)).setOnClickListener(this); // Program Change
+        // ==== Button ====
+
+        // Octave
+        ((Button)findViewById(R.id.octMinusButton)).setOnClickListener(this); //Note On
+        ((Button)findViewById(R.id.octResetButton)).setOnClickListener(this); // Note Off
+        ((Button)findViewById(R.id.octPlusButton)).setOnClickListener(this); // Program Change
+
+        // Transpose
+        ((Button)findViewById(R.id.keyMinusButton)).setOnClickListener(this); // key down button
+        ((Button)findViewById(R.id.keyResetButton)).setOnClickListener(this); // key reset button
+        ((Button)findViewById(R.id.keyPlusButton)).setOnClickListener(this); // key plus button
+
+        ((Button)findViewById(R.id.keyMinus12Button)).setOnClickListener(this); // Key -12 Btn
+        ((Button)findViewById(R.id.keyMinus11Button)).setOnClickListener(this); // Key -11 Btn
+        ((Button)findViewById(R.id.keyMinus10Button)).setOnClickListener(this); // Key -10 Btn
+        ((Button)findViewById(R.id.keyMinus9Button)).setOnClickListener(this); // Key -9 Btn
+        ((Button)findViewById(R.id.keyMinus8Button)).setOnClickListener(this); // Key -8 Btn
+        ((Button)findViewById(R.id.keyMinus7Button)).setOnClickListener(this); // Key -7 Btn
+        ((Button)findViewById(R.id.keyMinus6Button)).setOnClickListener(this); // Key -6 Btn
+        ((Button)findViewById(R.id.keyMinus5Button)).setOnClickListener(this); // Key -5 Btn
+        ((Button)findViewById(R.id.keyMinus4Button)).setOnClickListener(this); // Key -4 Btn
+        ((Button)findViewById(R.id.keyMinus3Button)).setOnClickListener(this); // Key -3 Btn
+        ((Button)findViewById(R.id.keyMinus2Button)).setOnClickListener(this); // Key -2 Btn
+        ((Button)findViewById(R.id.keyMinus1Button)).setOnClickListener(this); // Key -1 Btn
+        ((Button)findViewById(R.id.keyMinus1Button)).setOnClickListener(this); // Key +1 Btn
+        ((Button)findViewById(R.id.keyMinus2Button)).setOnClickListener(this); // Key +2 Btn
+        ((Button)findViewById(R.id.keyMinus3Button)).setOnClickListener(this); // Key +3 Btn
+        ((Button)findViewById(R.id.keyMinus4Button)).setOnClickListener(this); // Key +4 Btn
+        ((Button)findViewById(R.id.keyMinus5Button)).setOnClickListener(this); // Key +5 Btn
+        ((Button)findViewById(R.id.keyMinus6Button)).setOnClickListener(this); // Key +6 Btn
+        ((Button)findViewById(R.id.keyMinus7Button)).setOnClickListener(this); // Key +7 Btn
+        ((Button)findViewById(R.id.keyMinus8Button)).setOnClickListener(this); // Key +8 Btn
+        ((Button)findViewById(R.id.keyMinus9Button)).setOnClickListener(this); // Key +9 Btn
+        ((Button)findViewById(R.id.keyMinus10Button)).setOnClickListener(this); // Key +10 Btn
+        ((Button)findViewById(R.id.keyMinus11Button)).setOnClickListener(this); // Key +11 Btn
+        ((Button)findViewById(R.id.keyMinus12Button)).setOnClickListener(this); // Key +12 Btn
+
+        // Sound Module Reset
+        ((Button)findViewById(R.id.gmSystemOnButton)).setOnClickListener(this); // GM System On
+        ((Button)findViewById(R.id.gsResetButton)).setOnClickListener(this); // GS Reset
+        ((Button)findViewById(R.id.xgSystemOnButton)).setOnClickListener(this); // XG System On
 
         // MIDI INのMonitor
         mReceiveMessageTx = (TextView)findViewById(R.id.receiveMessageTx);
