@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/mikuta0407/project/android/midithru4play/app/.cxx/Debug/414i4y29/armeabi-v7a'
+ninja: no work to do.

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
     ndkVersion '23.1.7779620'
     
     defaultConfig {
         applicationId "net.mikuta0407.midithru4play"
         minSdkVersion 28
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         externalNativeBuild {

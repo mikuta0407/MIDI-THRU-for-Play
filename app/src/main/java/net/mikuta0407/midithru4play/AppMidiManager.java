@@ -159,6 +159,14 @@ public class AppMidiManager {
         sendMessages(msgBuff);
     }
 
+    public void sendSystemExclusive(int[] values){
+        byte[] byteSysex = new byte[values.length];
+        for (int i = 0; i < values.length; i++){
+            byteSysex[i] = (byte)values[i];
+        }
+        sendMessages(byteSysex);
+    }
+
     //
     // Native API stuff
     //

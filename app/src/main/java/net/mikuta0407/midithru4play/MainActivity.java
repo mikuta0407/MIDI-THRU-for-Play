@@ -67,6 +67,7 @@ public class MainActivity extends Activity
     Spinner mInputDevicesSpinner; // MIDI OUT
     Spinner mChannelConvertSpinner; // Channel Convert
     Spinner mProgramChangeSpinner; // Program Change
+    Spinner mControlChangeSpinner; // Control Change
 
     // シークバー
     SeekBar mVolumeSB;
@@ -75,6 +76,7 @@ public class MainActivity extends Activity
     SeekBar mPitchBendSB;
 
     // TextView
+    TextView mCcModeText;
     TextView mReceiveMessageTx;
     TextView mNowVolume;
     TextView mNowVelocity;
@@ -98,11 +100,15 @@ public class MainActivity extends Activity
     boolean isCcFix = false; // CCのモードを固定するか
     boolean isVelFix = false; // Velocity Fixをするか
 
+    int chconvert = 0;
+    int channel = 0;
+
     int octave = 0; // オクターブ移動状態
     int transpose = 0; //キー状態
 
     int volume = 100; // Volume
     int velocity = 100; // Velocity (for Fix)
+    int ccmode = 1;
 
     // Force to load the native library
     static {
@@ -135,6 +141,10 @@ public class MainActivity extends Activity
         mProgramChangeSpinner = (Spinner)findViewById(R.id.programChangeSpinner);
         mProgramChangeSpinner.setOnItemSelectedListener(this);
 
+        mControlChangeSpinner = (Spinner)findViewById(R.id.ccModeSpinner);
+        mControlChangeSpinner.setOnItemSelectedListener(this);
+
+
         // ==== Seek Bar ===
         // Modulation Wheel
         mControllerSB = (SeekBar)findViewById(R.id.controllerSeekBar);
@@ -147,9 +157,6 @@ public class MainActivity extends Activity
         mPitchBendSB.setOnSeekBarChangeListener(this);
         // Volume
         mVolumeSB = (SeekBar)findViewById(R.id.volumeBar);
-        mVolumeSB.setMax(8191);
-        mVolumeSB.setMin(-8192);
-        mVolumeSB.setProgress(0);
         mVolumeSB.setOnSeekBarChangeListener(this);
         // Velocity
         mVelocitySB = (SeekBar)findViewById(R.id.velocityVar);
@@ -160,6 +167,7 @@ public class MainActivity extends Activity
         mNowVelocity = (TextView)findViewById(R.id.velocityValueText); // Velocity
         mNowOct = (TextView)findViewById(R.id.nowOctText); // Now Octave
         mNowKey = (TextView)findViewById(R.id.nowKey); // Now Key
+        mCcModeText = (TextView)findViewById(R.id.ccModeText); // CC Mode;
 
         // ==== CheckBox ====
 
@@ -175,6 +183,7 @@ public class MainActivity extends Activity
                     // Spinner
                     mChannelConvertSpinner.setEnabled(false);
                     mProgramChangeSpinner.setEnabled(false);
+                    mControlChangeSpinner.setEnabled(false);
 
                     // SeekBar
                     mControllerSB.setEnabled(false);
@@ -192,6 +201,18 @@ public class MainActivity extends Activity
                     mChConvertSW.setEnabled(false);
                     mCcFixSW.setEnabled(false);
                     mVelFixSW.setEnabled(false);
+
+                    // Text View
+                    ((TextView)findViewById(R.id.ChConvertText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.PgChangeText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.ControlChangeText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.VolumeText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.VelocityText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.PitchBendText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.ccModeText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.octText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.transposeText)).setEnabled(false);
+                    ((TextView)findViewById(R.id.resetButtonsText)).setEnabled(false);
 
                     // Button
                     // Octave
@@ -240,6 +261,7 @@ public class MainActivity extends Activity
                     // Spinner
                     mChannelConvertSpinner.setEnabled(true);
                     mProgramChangeSpinner.setEnabled(true);
+                    mControlChangeSpinner.setEnabled(true);
 
                     // SeekBar
                     mControllerSB.setEnabled(true);
@@ -257,6 +279,19 @@ public class MainActivity extends Activity
                     mChConvertSW.setEnabled(true);
                     mCcFixSW.setEnabled(true);
                     mVelFixSW.setEnabled(true);
+
+                    // TextView
+                    ((TextView)findViewById(R.id.ChConvertText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.PgChangeText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.ControlChangeText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.VolumeText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.VelocityText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.PitchBendText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.ccModeText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.octText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.transposeText)).setEnabled(true);
+                    ((TextView)findViewById(R.id.resetButtonsText)).setEnabled(true);
+
 
                     // Button
                     // Octave
@@ -302,31 +337,39 @@ public class MainActivity extends Activity
             }
         });
 
-        //
+        // チャンネル変換
         mChConvertSW = (Switch)findViewById(R.id.chConvertToggle);
         mChConvertSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     isChConvert = true;
+                    chconvert = Integer.parseInt((String)mChannelConvertSpinner.getSelectedItem()) - 1;
+                    Log.i("midi thru", "test: " + chconvert);
                 } else {
                     isChConvert = false;
+                    chconvert = 0;
                 }
             }
         });
 
+        // CCモード変更有無
         mCcFixSW = (Switch)findViewById(R.id.ccFixSwitch);
         mCcFixSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     isCcFix= true;
+                    String[] tmp = ((String)mControlChangeSpinner.getSelectedItem()).split(" ", 0);
+                    ccmode = Integer.parseInt(tmp[0]);
+                    Log.i("midi thru", "ccmode: " + ccmode);
                 } else {
                     isCcFix = false;
                 }
             }
         });
 
+        // ベロシティ固定有無
         mVelFixSW = (Switch)findViewById(R.id.velocityFix);
         mVelFixSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -460,34 +503,184 @@ public class MainActivity extends Activity
     //
     @Override
     public void onClick(View view) {
-        byte[] keys = {60, 64, 67};         // C Major chord
+        /*byte[] keys = {60, 64, 67};         // C Major chord
         byte[] velocities = {60, 60, 60};   // Middling velocity
-        byte channel = 0;    // send on channel 0
+        byte channel = 0;    // send on channel 0*/
         switch (view.getId()) {
+            // === Octave ===
+            case R.id.octMinusButton:
+                octave -= 1;
+                break;
+
+            case R.id.octResetButton:
+                octave = 0;
+                break;
+
+            case R.id.octPlusButton:
+                octave += 1;
+                break;
+
+            // ==== Transpose ====
+            case R.id.keyMinusButton:
+                transpose -= 1;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyResetButton:
+                transpose = 0;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlusButton:
+                transpose += 1;
+                refreshTransposeText();
+                break;
+
+            // ==== Transpose (Direct) ====
+            case R.id.keyMinus12Button:
+                transpose = -12;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus11Button:
+                transpose = -11;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus10Button:
+                transpose = -10;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus9Button:
+                transpose = -9;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus8Button:
+                transpose = -8;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus7Button:
+                transpose = -7;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus6Button:
+                transpose = -6;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus5Button:
+                transpose = -5;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus4Button:
+                transpose = -4;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus3Button:
+                transpose = -3;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus2Button:
+                transpose = -2;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyMinus1Button:
+                transpose = -1;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus1Button:
+                transpose = 1;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus2Button:
+                transpose = 2;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus3Button:
+                transpose = 3;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus4Button:
+                transpose = 4;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus5Button:
+                transpose = 5;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus6Button:
+                transpose = 6;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus7Button:
+                transpose = 7;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus8Button:
+                transpose = 8;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus9Button:
+                transpose = 9;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus10Button:
+                transpose = 10;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus11Button:
+                transpose = 11;
+                refreshTransposeText();
+                break;
+
+            case R.id.keyPlus12Button:
+                transpose = 12;
+                refreshTransposeText();
+                break;
+
+            // === Module Reset ===
+
+            case R.id.gmSystemOnButton:
+                moduleReset("gm");
+                break;
+
+            case R.id.gsResetButton:
+                moduleReset("gs");
+                break;
+
+            case R.id.xgSystemOnButton:
+                moduleReset("xg");
+                break;
+
+            // === NOTEON/OFF Reference ====
             case R.id.keyDownBtn:
                 // Simulate a key-down
-                mAppMidiManager.sendNoteOn(channel, keys, velocities) ;
+                //mAppMidiManager.sendNoteOn(channel, keys, velocities) ;
                 break;
 
             case R.id.keyUpBtn:
                 // Simulate a key-up (converse of key-down above).
-                mAppMidiManager.sendNoteOff(channel, keys, velocities) ;
+                //mAppMidiManager.sendNoteOff(channel, keys, velocities) ;
                 break;
-
-            /*case R.id.channelChangeBtn: {
-                // Send a MIDI program change message
-                try {
-                    //String progNumStr = mProgNumberEdit.getText().toString();
-                    int progNum = Integer.parseInt(progNumStr);
-
-                    mAppMidiManager.sendProgramChange(channel, (byte)progNum);
-                } catch (NumberFormatException ex) {
-                    // Maybe let the user know
-                }
-            }
-                break;
-
-             */
         }
     }
 
@@ -497,15 +690,37 @@ public class MainActivity extends Activity
     @Override
     public void onProgressChanged(SeekBar seekBar, int pos, boolean fromUser) {
         switch (seekBar.getId()) {
-        case R.id.controllerSeekBar:
-            mAppMidiManager.sendController((byte)0, MidiSpec.MIDICC_MODWHEEL, (byte)pos);
-            break;
+            case R.id.controllerSeekBar:
+                if (!isAllThru) {
+                    Log.i("midi thru ", "cc: " + pos);
+                    mAppMidiManager.sendController((byte)(0+chconvert), (byte) ccmode, (byte) pos);
+                }
+                break;
 
-        case R.id.pitchBendSeekBar:
-            mAppMidiManager.sendPitchBend((byte)0, pos);
-            break;
+            case R.id.pitchBendSeekBar:
+                if (!isAllThru) {
+                    mAppMidiManager.sendPitchBend((byte)(0+chconvert), pos);
+                    Log.i("midi thru", "PB:" + pos);
+                }
+                break;
+
+            case R.id.volumeBar:
+                if (!isAllThru) {
+                    volume = pos;
+                    mAppMidiManager.sendController((byte)(0+chconvert), (byte)7, (byte) pos);
+                    mNowVolume.setText(String.valueOf(volume));
+                }
+                break;
+
+            case R.id.velocityVar:Bar:
+                if (!isAllThru) {
+                    velocity = mVelocitySB.getProgress();
+                    mNowVelocity.setText(String.valueOf(velocity));
+                }
+                break;
         }
     }
+
 
     //SeekBarのタッチ/タッチ離すの処理。PitchBendはここのStopで戻す?
     @Override
@@ -514,10 +729,9 @@ public class MainActivity extends Activity
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         if (seekBar.getId() == R.id.pitchBendSeekBar){
-            mPitchBendSB.setProgress(0);
+            mPitchBendSB.setProgress(8192);
         }
     }
-
 
     //
     // AdapterView.OnItemSelectedListener overriden methods
@@ -525,15 +739,51 @@ public class MainActivity extends Activity
     @Override
     public void onItemSelected(AdapterView<?> spinner, View view, int position, long id) {
         switch (spinner.getId()) {
-        case R.id.outputDevicesSpinner: {
+            case R.id.outputDevicesSpinner: {
                 MidiDeviceListItem listItem = (MidiDeviceListItem) spinner.getItemAtPosition(position);
                 mAppMidiManager.openReceiveDevice(listItem.getDeviceInfo());
             }
             break;
 
-        case R.id.inputDevicesSpinner: {
+            case R.id.inputDevicesSpinner: {
                 MidiDeviceListItem listItem = (MidiDeviceListItem)spinner.getItemAtPosition(position);
                 mAppMidiManager.openSendDevice(listItem.getDeviceInfo());
+            }
+            break;
+
+            case R.id.chConvertSpinner: {
+                if (isChConvert) {
+                    chconvert = Integer.parseInt((String)mChannelConvertSpinner.getSelectedItem()) - 1;
+                    Log.i("midi thru", "ChConv: " + chconvert);
+                }
+            }
+            break;
+
+            case R.id.programChangeSpinner: {
+                // Send a MIDI program change message
+                try {
+                    //String progNumStr = mProgNumberEdit.getText().toString();
+                    int progNum = (int)mProgramChangeSpinner.getSelectedItemPosition();
+
+                    mAppMidiManager.sendProgramChange((byte)(0 + chconvert) , (byte)progNum);
+
+                    Log.i("midi thru", "progNum: " + progNum);;
+
+                } catch (NumberFormatException ex) {
+                    // Maybe let the user know
+                }
+
+
+            }
+            break;
+
+            case R.id.ccModeSpinner: {
+                mCcModeText.setText((String)mControlChangeSpinner.getSelectedItem());
+                if (isCcFix){
+                    String[] tmp = ((String)mControlChangeSpinner.getSelectedItem()).split(" ", 0);
+                    ccmode = Integer.parseInt(tmp[0]);
+                    Log.i("midi thru", "ccmode: " + ccmode);
+                }
             }
             break;
         }
@@ -590,6 +840,33 @@ public class MainActivity extends Activity
     private void onDeviceListChange() {
         fillDeviceList(mOutputDevicesSpinner, mReceiveDevices);
         fillDeviceList(mInputDevicesSpinner, mSendDevices);
+    }
+
+    /**
+     * トランスポーズの現在のキーのTextViewを更新するやつ
+     */
+    private void refreshTransposeText() {
+
+        mNowKey.setText("Now");
+    };
+
+
+    private void moduleReset(String mode) {
+        int sysex[] = {0}; //ここで一つ一つにbyteキャストしたくないから。AppMidiManager側でint->byteキャストをする。
+        if (mode == "gm"){
+            sysex = new int[]{0xF0, 0x7E, 0x7F, 0x09, 0x01, 0xF7};
+        } else if (mode == "gs"){
+            sysex = new int[]{0xF0,0x41,0x10,0x42,0x12,0x40,0x00,0x7F,0x00,0x41,0xF7};
+        } else if (mode == "xg"){
+            sysex = new int[]{0xF0,0x43,0x10,0x4C,0x00,0x00,0x7E,0x00,0xF7};
+        }
+
+        String tmp = "";
+        for (int i = 0; i < sysex.length; i++){
+            tmp = tmp + String.format("0x%02x", Integer.valueOf(sysex[i])) + ", ";
+        }
+        Log.i("midi thru", "sysex: " + tmp);
+        mAppMidiManager.sendSystemExclusive(sysex);
     }
 
     //
