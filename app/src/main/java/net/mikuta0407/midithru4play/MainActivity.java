@@ -750,12 +750,14 @@ public class MainActivity extends Activity
     public void onItemSelected(AdapterView<?> spinner, View view, int position, long id) {
         switch (spinner.getId()) {
             case R.id.outputDevicesSpinner: {
+                mAppMidiManager.closeReceiveDevice();
                 MidiDeviceListItem listItem = (MidiDeviceListItem) spinner.getItemAtPosition(position);
                 mAppMidiManager.openReceiveDevice(listItem.getDeviceInfo());
             }
             break;
 
             case R.id.inputDevicesSpinner: {
+                mAppMidiManager.closeSendDevice();
                 MidiDeviceListItem listItem = (MidiDeviceListItem)spinner.getItemAtPosition(position);
                 mAppMidiManager.openSendDevice(listItem.getDeviceInfo());
             }
@@ -894,7 +896,23 @@ public class MainActivity extends Activity
         runOnUiThread(new Runnable() {
             public void run() {
                 showReceivedMessage(message);
+                processingMessage(message);
             }
         });
     }
+
+    private void processingMessage(byte[] message){
+        // CCのバーの同期
+
+
+        //
+
+        if (isAllThru){
+
+            String str1 = java.util.Arrays.toString(message);
+            Log.i("midi thru", "message: "+ str1);
+            mAppMidiManager.sendMessages(message);
+        }
+    }
+
 }

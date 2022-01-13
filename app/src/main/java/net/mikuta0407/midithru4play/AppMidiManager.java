@@ -21,6 +21,7 @@ import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiInputPort;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -89,10 +90,13 @@ public class AppMidiManager {
     }
 
     public void closeReceiveDevice() {
+        Log.i("midi manager", "Before close mRecieveDevice" + mReceiveDevice);
         if (mReceiveDevice != null) {
             // Native API
+            Log.i("midi Manager", "Not Null");
             mReceiveDevice = null;
         }
+        Log.i("midi manager", "After close mRecieveDevice" + mReceiveDevice);
     }
 
     //
@@ -117,7 +121,7 @@ public class AppMidiManager {
         }
     }
 
-    private void sendMessages(byte[] msgBuff) {
+    public void sendMessages(byte[] msgBuff) {
         writeMidi(msgBuff, msgBuff.length);
     }
 
