@@ -510,19 +510,26 @@ public class MainActivity extends Activity
             // === Octave ===
             case R.id.octMinusButton:
                 octave -= 1;
+                mNowOct.setText("Now Oct: " + octave);
                 break;
 
             case R.id.octResetButton:
                 octave = 0;
+                mNowOct.setText("Now Oct: " + octave);
                 break;
 
             case R.id.octPlusButton:
                 octave += 1;
+                mNowOct.setText("Now Oct: " + octave);
                 break;
 
             // ==== Transpose ====
             case R.id.keyMinusButton:
                 transpose -= 1;
+                if (transpose == -13){
+                    transpose = -12;
+                }
+                mNowOct.setText("Now Oct: " + octave);
                 refreshTransposeText();
                 break;
 
@@ -533,6 +540,9 @@ public class MainActivity extends Activity
 
             case R.id.keyPlusButton:
                 transpose += 1;
+                if (transpose == 13){
+                    transpose = 12;
+                }
                 refreshTransposeText();
                 break;
 
@@ -846,8 +856,8 @@ public class MainActivity extends Activity
      * トランスポーズの現在のキーのTextViewを更新するやつ
      */
     private void refreshTransposeText() {
-
-        mNowKey.setText("Now");
+        String keytext[] = new String[]{"C","C♯/D♭","D","D♯/E♭","E","F","F♯/G♭","G","G♯/A♭","A","A♯/B♭","B","C","C♯/D♭","D","D♯/E♭","E","F","F♯/G♭","G","G♯/A♭","A","A♯/B♭","B","C"};
+        mNowKey.setText("Now key: " + transpose + " " + keytext[transpose + 12]);
     };
 
 
