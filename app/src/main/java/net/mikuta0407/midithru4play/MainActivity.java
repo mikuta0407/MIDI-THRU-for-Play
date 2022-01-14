@@ -101,7 +101,6 @@ public class MainActivity extends Activity
     boolean isVelFix = false; // Velocity Fixをするか
 
     int chconvert = 0;
-    int channel = 0;
 
     int octave = 0; // オクターブ移動状態
     int transpose = 0; //キー状態
@@ -896,23 +895,70 @@ public class MainActivity extends Activity
         runOnUiThread(new Runnable() {
             public void run() {
                 showReceivedMessage(message);
-                processingMessage(message);
+                processingMessage(message); //ここでメッセージの加工
             }
         });
     }
 
     private void processingMessage(byte[] message){
+        if (isAllThru){
+            mAppMidiManager.sendMessages(message);
+        } else {
+
+
+            String str1 = java.util.Arrays.toString(message);
+            Log.i("midi thru", "recieve message: " + str1);
+
+            //1回のメッセージでまとめて飛んでくることがあるので、何個のメッセージが飛んできてるか確認
+            //Notes、と書いてあるけど、Note OnとNote Offで共通のため。
+            int sameTimeMsg = 1;
+            if (message.length > 3) {
+                sameTimeMsg = message.length / 3; // 3つで1セットなので3で割って個数計算
+            }
+            byte sendChannel = 0; // チャンネル変換があるので、どちらの場合でもここに投げる。
+            byte sendNote[] = new byte[1];
+            byte sendVelocity[] = new byte[1];
+
+            /* 作業メモ: ちぎっては投げをするか、ちゃんと生成してから投げるか */
+            for (int i = 0; i < sameTimeMsg; i++) {
+                if (((message[0 + i * 3] & 0xF0) >> 4) == MidiSpec.MIDICODE_NOTEON || ((message[0 + i * 3] & 0xF0) >> 4) == MidiSpec.MIDICODE_NOTEOFF){
+                    // Channel
+                    if (isChConvert){
+                        sendChannel = (byte)chconvert;
+                    } else {
+                        sendChannel = (message[0 + i * 3]);
+                    }
+
+                    // Note
+                    sendNote[0] = (byte)(message[1 + i * 3] + transpose + octave * 12);
+
+                    // Velocity
+                    if (isVelFix){
+                        sendVelocity[0] = (byte)velocity;
+                    } else {
+                        sendVelocity[0] = message[2 + i * 3];
+                    }
+                }
+
+                switch ((message[0 + i * 3] & 0xF0) >> 4) {
+                    case MidiSpec.MIDICODE_NOTEON:
+                        mAppMidiManager.sendNoteOn(sendChannel, sendNote, sendVelocity);
+                        break;
+                    case MidiSpec.MIDICODE_NOTEOFF:
+                        mAppMidiManager.sendNoteOff(sendChannel, sendNote, sendVelocity);
+                        break;
+                }
+
+            }
+
+        }
+
+        // Control Change
+
+
         // CCのバーの同期
 
 
-        //
-
-        if (isAllThru){
-
-            String str1 = java.util.Arrays.toString(message);
-            Log.i("midi thru", "message: "+ str1);
-            mAppMidiManager.sendMessages(message);
-        }
     }
 
 }
