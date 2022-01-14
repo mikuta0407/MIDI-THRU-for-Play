@@ -90,13 +90,13 @@ public class AppMidiManager {
     }
 
     public void closeReceiveDevice() {
-        Log.i("midi manager", "Before close mRecieveDevice" + mReceiveDevice);
+        //Log.i("midi manager", "Before close mRecieveDevice" + mReceiveDevice);
         if (mReceiveDevice != null) {
             // Native API
-            Log.i("midi Manager", "Not Null");
             mReceiveDevice = null;
+            stopReadingMidi();
         }
-        Log.i("midi manager", "After close mRecieveDevice" + mReceiveDevice);
+        //Log.i("midi manager", "After close mRecieveDevice" + mReceiveDevice);
     }
 
     //
@@ -118,6 +118,7 @@ public class AppMidiManager {
         if (mSendDevice != null) {
             // Native API
             mSendDevice = null;
+            stopWritingMidi();
         }
     }
 

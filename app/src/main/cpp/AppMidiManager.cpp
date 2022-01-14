@@ -170,6 +170,8 @@ void Java_net_mikuta0407_midithru4play_AppMidiManager_startReadingMidi(
  * @param   (unnamed)   TBMidiManager (Java) object.
  */
 void Java_net_mikuta0407_midithru4play_AppMidiManager_stopReadingMidi(JNIEnv*, jobject) {
+    AMidiOutputPort_close(sMidiOutputPort);
+
     // need some synchronization here
     sReading = false;
     pthread_join(sReadThread, NULL);
@@ -198,8 +200,10 @@ void Java_net_mikuta0407_midithru4play_AppMidiManager_startWritingMidi(
     // ssize_t numPorts = AMidiDevice_getNumInputPorts(sNativeSendDevice);
 
     AMidiInputPort *inputPort;
+
     status = AMidiInputPort_open(sNativeSendDevice, portNumber, &inputPort);
     // sMidiInputPort.store(inputPort);
+
     sMidiInputPort = inputPort;
 }
 
@@ -209,6 +213,7 @@ void Java_net_mikuta0407_midithru4play_AppMidiManager_startWritingMidi(
  * @param   (unnamed)   TBMidiManager (Java) object.
  */
 void Java_net_mikuta0407_midithru4play_AppMidiManager_stopWritingMidi(JNIEnv*, jobject) {
+    AMidiInputPort_close(sMidiInputPort);
     /*media_status_t status =*/ AMidiDevice_release(sNativeSendDevice);
     sNativeSendDevice = NULL;
 }
