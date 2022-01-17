@@ -680,16 +680,6 @@ public class MainActivity extends Activity
                 moduleReset("xg");
                 break;
 
-            // === NOTEON/OFF Reference ====
-            case R.id.keyDownBtn:
-                // Simulate a key-down
-                //mAppMidiManager.sendNoteOn(channel, keys, velocities) ;
-                break;
-
-            case R.id.keyUpBtn:
-                // Simulate a key-up (converse of key-down above).
-                //mAppMidiManager.sendNoteOff(channel, keys, velocities) ;
-                break;
         }
     }
 

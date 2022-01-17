@@ -12,44 +12,60 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="7"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/midiIO_Layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="MIDI IN"
-                android:textSize="30sp" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/outputDevicesSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MIDI IN"
+                    android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="MIDI OUT"
-                android:textSize="30sp" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MIDI OUT"
+                    android:textSize="30sp" />
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/inputDevicesSpinner"
+            <LinearLayout
+                android:id="@+id/midiIOSpinner_Layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/outputDevicesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/inputDevicesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <View
-                android:id="@+id/divider5"
+                android:id="@+id/divider6"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
@@ -58,7 +74,7 @@
                 android:id="@+id/allThruSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="7"
                 android:text="All THRU Mode" />
 
             <TextView
@@ -117,8 +133,7 @@
                     android:id="@+id/ccModeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:entries="@array/ccmode_list" />
+                    android:layout_weight="1" />
 
                 <Switch
                     android:id="@+id/ccFixSwitch"
@@ -201,7 +216,7 @@
             <SeekBar
                 android:id="@+id/pitchBendSeekBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/ccModeText"
@@ -215,13 +230,27 @@
                 android:layout_height="wrap_content"
                 android:max="127"
                 android:min="0"
-                android:progress="0" />
+                android:progress="64" />
 
-            <View
-                android:id="@+id/divider3"
+            <TextView
+                android:id="@+id/receiveMessageTx"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/octText"
@@ -239,7 +268,7 @@
             <LinearLayout
                 android:id="@+id/octButton"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
@@ -298,7 +327,7 @@
             <LinearLayout
                 android:id="@+id/keyButtonMinusPlus"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
@@ -333,12 +362,6 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -356,9 +379,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-12 C" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-12 C"
+                        android:textSize="10sp" />
 
                     <Button
                         android:id="@+id/keyMinus11Button"
@@ -366,9 +392,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-11 C♯/D♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-11 C♯/D♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus10Button"
@@ -376,9 +405,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-10 D" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-10 D"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus9Button"
@@ -386,9 +418,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-9 D♯/E♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-9 D♯/E♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus8Button"
@@ -396,9 +431,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-8 E" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-8 E"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus7Button"
@@ -406,9 +444,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-7 F" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-7 F"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -423,9 +464,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-6 F♯/G♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-6 F♯/G♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus5Button"
@@ -433,9 +477,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-5 G" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-5 G"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus4Button"
@@ -443,9 +490,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-4 G♯/A♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-4 G♯/A♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus3Button"
@@ -453,9 +503,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-3 A" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-3 A"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus2Button"
@@ -463,9 +516,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-2 A♯/B♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-2 A♯/B♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyMinus1Button"
@@ -473,9 +529,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#D5AEAE"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="-1 B" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="-1 B"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <View
@@ -496,9 +555,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="1 C♯/D♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="1 C♯/D♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus2Button"
@@ -506,9 +568,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="2 D" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="2 D"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus3Button"
@@ -516,9 +581,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="3 D♯/E♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="3 D♯/E♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus4Button"
@@ -526,9 +594,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="4 E" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="4 E"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus5Button"
@@ -536,9 +607,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="5 F" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="5 F"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus6Button"
@@ -546,9 +620,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="6 F♯/G♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="6 F♯/G♭"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -563,9 +640,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="7 G" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="7 G"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus8Button"
@@ -573,9 +653,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="8 G♯/A♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="8 G♯/A♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus9Button"
@@ -583,9 +666,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="9 A" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="9 A"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus10Button"
@@ -593,9 +679,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="10 A♯/B♭" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="10 A♯/B♭"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus11Button"
@@ -603,9 +692,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="11 B" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:text="11 B"
+                        android:textSize="10sp"/>
 
                     <Button
                         android:id="@+id/keyPlus12Button"
@@ -613,9 +704,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#9FB0E3"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:text="12 C" />
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="12 C"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -656,12 +750,14 @@
                     android:text="XG System On" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/receiveMessageTx"
+            <View
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>
